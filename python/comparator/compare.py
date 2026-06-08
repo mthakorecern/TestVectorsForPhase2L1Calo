@@ -77,16 +77,16 @@ def compare_csvs(left_path, right_path, rel_path, max_diffs_per_file=20):
         ok = False
         print(f"[FAIL] {rel_path}")
         print("       Column mismatch")
-        print(f"       LEFT : {sorted(left_col_set)}")
-        print(f"       RIGHT: {sorted(right_col_set)}")
+        print(f"       Emulator-Output-directory : {sorted(left_col_set)}")
+        print(f"       Firmware-Output-directory: {sorted(right_col_set)}")
         return False
 
     if len(left_rows) != len(right_rows):
         ok = False
         print(f"[FAIL] {rel_path}")
         print("       Row count mismatch")
-        print(f"       LEFT : {len(left_rows)}")
-        print(f"       RIGHT: {len(right_rows)}")
+        print(f"       Emulator-Output-directory : {len(left_rows)}")
+        print(f"       Firmware-Output-directory: {len(right_rows)}")
         # continue comparing overlapping rows
 
     ordered_cols = [c for c in left_cols if c in right_col_set]
@@ -104,8 +104,8 @@ def compare_csvs(left_path, right_path, rel_path, max_diffs_per_file=20):
                     print(f"[FAIL] {rel_path}")
                 diff_count += 1
                 print(f"       row={i}, column={col}")
-                print(f"       LEFT : {lv}")
-                print(f"       RIGHT: {rv}")
+                print(f"       Emulator-Output-directory : {lv}")
+                print(f"       Firmware-Output-directory: {rv}")
                 if diff_count >= max_diffs_per_file:
                     print(f"       ... stopping after {max_diffs_per_file} differences")
                     return False
@@ -119,17 +119,17 @@ def compare_csvs(left_path, right_path, rel_path, max_diffs_per_file=20):
 
 def main():
     if len(sys.argv) != 3:
-        print("Usage: compare_csv_trees.py <left_dir> <right_dir>")
+        print("Usage: compare.py <Emulator-Output-directory> <Firmware-Output-directory>")
         sys.exit(1)
 
     left_dir = Path(sys.argv[1]).resolve()
     right_dir = Path(sys.argv[2]).resolve()
 
     if not left_dir.is_dir():
-        print(f"LEFT is not a directory: {left_dir}")
+        print(f"Emulator-Output-directory is not a directory: {left_dir}")
         sys.exit(1)
     if not right_dir.is_dir():
-        print(f"RIGHT is not a directory: {right_dir}")
+        print(f"Firmware-Output-directory is not a directory: {right_dir}")
         sys.exit(1)
 
     left_csvs = list_csvs(left_dir)
@@ -146,13 +146,13 @@ def main():
 
     if only_left:
         all_ok = False
-        print("[FAIL] CSVs only in LEFT:")
+        print("[FAIL] CSVs only in Emulator-Output-directory:")
         for rel in only_left:
             print(f"       {rel}")
 
     if only_right:
         all_ok = False
-        print("[FAIL] CSVs only in RIGHT:")
+        print("[FAIL] CSVs only in Firmware-Output-directory:")
         for rel in only_right:
             print(f"       {rel}")
 
@@ -161,11 +161,11 @@ def main():
         all_ok = all_ok and ok
 
     print()
-    print(f"LEFT directory : {left_dir}")
-    print(f"RIGHT directory: {right_dir}")
+    print(f"Emulator-Output-directory directory : {left_dir}")
+    print(f"Firmware-Output-directory directory: {right_dir}")
     print(f"Common CSVs    : {len(common)}")
-    print(f"Only in LEFT   : {len(only_left)}")
-    print(f"Only in RIGHT  : {len(only_right)}")
+    print(f"Only in Emulator-Output-directory   : {len(only_left)}")
+    print(f"Only in Firmware-Output-directory  : {len(only_right)}")
 
     if all_ok:
         print("\nAll matched.")
