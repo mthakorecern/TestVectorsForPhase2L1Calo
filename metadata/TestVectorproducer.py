@@ -50,6 +50,14 @@ def cmsRunconfigfileproducer(InputFile, OutputFile, Skip_events, Max_events, eve
                 "keep *_simEcalEBTriggerPrimitiveDigis_*_*",
                 "keep *_simHcalTriggerPrimitiveDigis_*_*",
 
+                # Storing the GEN Level Branches
+                "keep *_genParticles_*_*",
+                "keep *_slimmedJets_*_*",
+                "keep *_slimmedGenJets_*_*",
+                "keep *_slimmedElectrons_*_*",
+                
+
+
                 # Keep the premix-stage2 TP branches too
                 "keep *_DMEcalEBTriggerPrimitiveDigis_*_*",
                 "keep *_DMHcalTriggerPrimitiveDigis_*_*",
